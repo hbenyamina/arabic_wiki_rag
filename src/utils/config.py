@@ -1,5 +1,6 @@
 # A dataimport os
 from dataclasses import dataclass
+import os
 
 
 @dataclass
@@ -20,4 +21,4 @@ class EmbeddingConfig:
 
 @dataclass
 class MilvusConfig:
-    db_file: str = os.getenv("MILVUS_CLIENT_DB_FILE", "./arabic_rag.db")
+    uri: str = os.getenv("MILVUS_CLIENT_URI", "http://localhost:19530")

@@ -1,40 +1,3 @@
-
-services:
-  vllm-openai:
-    image: vllm/vllm-openai:latest
-    runtime: nvidia
-    env_file:
-      - .env
-    ports:
-      - "8000:8000"
-    volumes:
-      - ~/.cache/huggingface:/root/.cache/huggingface
-    ipc: host
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
-    command: --model ${GENERATION_MODEL} --gpu-memory-utilization 0.9
-    
-  text-embeddings-inference:
-    image: ghcr.io/huggingface/text-embeddings-inference:1.5
-    runtime: nvidia
-    env_file:
-      - .env
-    ports:
-      - "8080:80"
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
-    command: --model-id ${EMBEDDING_MODEL}
-
 services:
   vllm-openai:
     image: vllm/vllm-openai:latest
@@ -98,7 +61,7 @@ services:
 
   standalone:
     container_name: milvus-standalone
-    image: milvusdb/milvus:v2.0.2
+    image: milvusdb/milvus:latest
     command: ["milvus", "run", "standalone"]
     environment:
       ETCD_ENDPOINTS: etcd:2379
