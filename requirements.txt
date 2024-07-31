@@ -9,3 +9,5 @@ vllm
 pymilvus
 openai
 pytest
+pydantic
+uvicorn
