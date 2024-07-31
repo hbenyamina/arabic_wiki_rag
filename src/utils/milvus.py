@@ -51,3 +51,4 @@ def semantic_search(client, vector, limit=30):
         limit=limit,
         output_fields=["url", "article_id", "text"],
     )
+    return res
