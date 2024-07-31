@@ -44,11 +44,11 @@ def insert_data(client, data):
     return res
 
 
-def semantic_search(client, vector, limit=30):
+def semantic_search(client, vector, limit=5):
     res = client.search(
         collection_name="wikipedia",
         data=vector,
         limit=limit,
         output_fields=["url", "article_id", "text"],
     )
-    return res
+    return list(res)

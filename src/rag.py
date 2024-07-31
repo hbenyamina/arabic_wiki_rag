@@ -8,12 +8,13 @@ from typing import List
 def generate_response(query, history: List[History]):
     vector = embed_batch(["query: " + query])
     client = get_client()
-    documents = semantic_search(client, vector)
-    context = [document["text"] for document in documents]
-    prompt = """Given the following context, answer the quesion: {{question}}
+    documents = semantic_search(client, vector)[0]
+    print(documents)
+    context = [document["entity"]["text"] for document in documents]
+    prompt = """Given the following context, answer the quesion: {question}
     Context:
-    {{context}}
+    {context}
     """.format(
         question=query, context=context
     )
-    generate_text(prompt)
+    return generate_text(prompt)
