@@ -21,9 +21,7 @@ def create_collection(client):
         schema.add_field(field_name="id", datatype=DataType.INT64, is_primary=True)
         schema.add_field(field_name="url", datatype=DataType.VARCHAR, max_length=256)
         schema.add_field(field_name="article_id", datatype=DataType.INT64)
-        schema.add_field(
-            field_name="text", datatype=DataType.VARCHAR, max_length=512 * 4
-        )
+        schema.add_field(field_name="text", datatype=DataType.VARCHAR, max_length=10000)
         schema.add_field(field_name="vector", datatype=DataType.FLOAT_VECTOR, dim=768)
 
         index_params = client.prepare_index_params()
@@ -39,3 +37,17 @@ def create_collection(client):
     else:
         print("Collection already exists")
         return False
+
+
+def insert_data(client, data):
+    res = client.insert(collection_name="wikipedia", data=data)
+    return res
+
+
+def semantic_search(client, vector, limit=30):
+    res = client.search(
+        collection_name="wikipedia",
+        data=vector,
+        limit=limit,
+        output_fields=["url", "article_id", "text"],
+    )
