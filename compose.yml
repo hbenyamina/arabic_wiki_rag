@@ -1,4 +1,10 @@
 services:
+  rag_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
   vllm-openai:
     image: vllm/vllm-openai:latest
     runtime: nvidia

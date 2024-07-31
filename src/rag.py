@@ -14,6 +14,7 @@ def generate_response(query, history: List[History]):
     prompt = """Given the following context, answer the quesion: {question}
     Context:
     {context}
+    You must answer in Arabic.
     """.format(
         question=query, context=context
     )
