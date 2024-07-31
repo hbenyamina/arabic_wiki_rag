@@ -1,13 +1,11 @@
-sentence_transformers
 datasets
-transformers
 langchain_experimental
 langchain_openai
 langchain-text-splitters
 tiktoken
-vllm
 pymilvus
 openai
 pytest
 pydantic
 uvicorn
+fastapi
