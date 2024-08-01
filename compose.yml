@@ -7,8 +7,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    
-  vllm-openai:
+    networks:
+      - rag
+
+  generation_server:
     image: vllm/vllm-openai:latest
     runtime: nvidia
     env_file:
@@ -26,8 +28,10 @@ services:
               count: all
               capabilities: [gpu]
     command: --model ${GENERATION_MODEL} --gpu-memory-utilization 0.9
+    networks:
+      - rag
 
-  text-embeddings-inference:
+  embedding_server:
     image: ghcr.io/huggingface/text-embeddings-inference:1.5
     runtime: nvidia
     env_file:
@@ -42,6 +46,9 @@ services:
               count: all
               capabilities: [gpu]
     command: --model-id ${EMBEDDING_MODEL} --auto-truncate --max-client-batch-size 16
+    networks:
+      - rag
+
   etcd:
     container_name: milvus-etcd
     image: quay.io/coreos/etcd:v3.5.0
@@ -52,6 +59,8 @@ services:
     volumes:
       - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/etcd:/etcd
     command: etcd -advertise-client-urls=http://127.0.0.1:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
+    networks:
+      - rag
 
   minio:
     container_name: milvus-minio
@@ -67,6 +76,8 @@ services:
       interval: 30s
       timeout: 20s
       retries: 3
+    networks:
+      - rag
 
   standalone:
     container_name: milvus-standalone
@@ -82,7 +93,9 @@ services:
     depends_on:
       - "etcd"
       - "minio"
+    networks:
+      - rag
 
 networks:
-  default:
-    name: milvus
+  rag:
+    driver: bridge
