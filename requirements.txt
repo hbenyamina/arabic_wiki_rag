@@ -9,3 +9,4 @@ pytest
 pydantic
 uvicorn
 fastapi
+gradio==4.40.0

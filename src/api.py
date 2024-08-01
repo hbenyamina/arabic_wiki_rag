@@ -3,8 +3,9 @@ from typing import List
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from utils.data_models import History
-from rag import generate_response,generate_response_streaming
+from rag import generate_response, generate_response_streaming
 import uvicorn
+
 
 app = FastAPI()
 
@@ -19,10 +20,18 @@ def search_endpoint(request: SearchModel):
     return generate_response(request.query, request.history)
 
 
+def format_streaming_event(data):
+    return f"data: {data}\n\n"
+
+
 @app.get("/ask/stream")
 async def stream_endpoint(request: SearchModel):
+    def generate():
+        for message in generate_response_streaming(request.query, request.history):
+            yield format_streaming_event(message)
+
     return StreamingResponse(
-        generate_response_streaming(request.query, request.history),
+        generate(),
         media_type="text/event-stream",
     )
 

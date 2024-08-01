@@ -9,6 +9,7 @@ services:
       - "3000:3000"
     networks:
       - rag
+    command: python3 gradio_ui.py
 
   generation_server:
     image: vllm/vllm-openai:latest

@@ -16,10 +16,6 @@ def generate_text(prompt):
     return completion.choices[0].message.content
 
 
-def format_streaming_event(data):
-    return f"data: {data}\n\n"
-
-
 def generate_text_streaming(prompt):
     config = GenerationConfig()
     client = OpenAI(
@@ -33,4 +29,4 @@ def generate_text_streaming(prompt):
         stream=True,
     )
     for chunk in completion:
-        yield format_streaming_event(chunk.choices[0].delta.content)
+        yield chunk.choices[0].delta.content
