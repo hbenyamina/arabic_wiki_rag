@@ -13,7 +13,7 @@ def rag_chat(query, history):
 
 
 with gr.Blocks() as demo:
-    chatbot = gr.Chatbot(placeholder="Ask Me Anything")
+    chatbot = gr.Chatbot(placeholder="Ask Me Anything", rtl=True)
     gr.ChatInterface(fn=rag_chat, chatbot=chatbot)
 
 demo.launch(server_name="0.0.0.0", server_port=3000)

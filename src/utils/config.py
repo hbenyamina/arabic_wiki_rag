@@ -7,6 +7,7 @@ import os
 class GenerationConfig:
     model: str = os.getenv("GENERATION_MODEL", "CohereForAI/aya-23-8B")
     base_url: str = os.getenv("GENERATION_SERVER_BASE_URL", "http://127.0.0.1:8000/v1")
+    temperature: float = os.getenv("GENERATION_TEMPERATURE", 0.7)
 
 
 @dataclass
