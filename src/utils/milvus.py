@@ -1,5 +1,5 @@
 from pymilvus import MilvusClient, DataType
-from utils.config import MilvusConfig
+from utils.config import MilvusConfig, EmbeddingConfig
 from pymilvus import utility, connections
 
 
@@ -10,6 +10,7 @@ def get_client():
 
 
 def create_collection(client):
+    embedding_config = EmbeddingConfig()
     if "wikipedia" not in client.list_collections():
         print("Collection does not exist. Creating ....")
         schema = MilvusClient.create_schema(
@@ -22,7 +23,11 @@ def create_collection(client):
         schema.add_field(field_name="url", datatype=DataType.VARCHAR, max_length=256)
         schema.add_field(field_name="article_id", datatype=DataType.INT64)
         schema.add_field(field_name="text", datatype=DataType.VARCHAR, max_length=10000)
-        schema.add_field(field_name="vector", datatype=DataType.FLOAT_VECTOR, dim=768)
+        schema.add_field(
+            field_name="vector",
+            datatype=DataType.FLOAT_VECTOR,
+            dim=embedding_config.vector_size,
+        )
 
         index_params = client.prepare_index_params()
 

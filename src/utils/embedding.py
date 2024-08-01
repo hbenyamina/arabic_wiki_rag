@@ -25,5 +25,4 @@ def embed_batch(text_batch):
         else:
             print(embedding)
             raise AssertionError
-
-    return embeddings
+    return [vector[: config.vector_size] for vector in embeddings]

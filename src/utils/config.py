@@ -14,7 +14,8 @@ class GenerationConfig:
 class EmbeddingConfig:
     model: str = os.getenv("EMBEDDING_MODEL", "intfloat/multilingual-e5-base")
     base_url: str = os.getenv("EMBEDDING_SERVER_BASE_URL", "http://127.0.0.1:8080")
-    batch_size: int = os.getenv("EMBEDDING_BATCH_SIZE", 16)
+    batch_size: int = int(os.getenv("EMBEDDING_BATCH_SIZE", 16))
+    vector_size: int = int(os.getenv("EMBEDDING_VECTOR_SIZE", 768))
 
 
 @dataclass
