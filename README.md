@@ -44,8 +44,8 @@ The project has been successfully tested on an NVIDIA L4 GPU with 24GB of VRAM. 
 
 To index the data in Milvus, follow these steps after running Docker Compose:
 
-1. **Verify the Milvus server address:**
-   - Execute the following command to ensure the Milvus server address is correct:
+1. **Ensure Milvus is running correctly:**
+   - Execute the following command to ensure that Milvus is running correctly:
      ```bash
      curl http://<ip_address>:19530/v1/vector/collections
      ```
@@ -76,7 +76,7 @@ A demonstration of the project is available using Gradio, located in the `demo/`
 3. Execute the following command:
 
 ```bash
-python demo/gradio_ui.py --rag_api_host "http://127.0.0.1:3000" --port 7860
+python gradio_ui.py --rag_api_host "http://127.0.0.1:3000" --port 7860
 ```
 
 This command will start the Gradio demo interface on port 7860, connecting to the RAG API hosted locally at `http://127.0.0.1:3000`.
