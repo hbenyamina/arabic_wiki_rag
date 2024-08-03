@@ -2,7 +2,7 @@
 
 A RAG (Retrieval-Augmented Generation) application for Arabic Wiki utilizing the Aya model.
 
-![]()
+![](https://github.com/hbenyamina/arabic_wiki_rag/blob/f69445b250a34819b10d8b2a56e4b34f0f736458/assets/demo.gif)
 
 ## Project Overview
 This project implements a high-speed, local Retrieval-Augmented Generation (RAG) system. It combines vLLM, Huggingface's text embedding inference, and Milvus to deliver efficient RAG performance using only a single GPU.
