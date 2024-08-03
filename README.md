@@ -2,6 +2,15 @@
 
 A RAG (Retrieval-Augmented Generation) application for Arabic Wiki utilizing the Aya model.
 
+
+## Project Overview
+This project implements a high-speed, local Retrieval-Augmented Generation (RAG) system. It combines vLLM, Huggingface's text embedding inference, and Milvus to deliver efficient RAG performance using only a single GPU.
+
+## Hardware Requirements
+The project has been successfully tested on an NVIDIA L4 GPU with 24GB of VRAM. GPUs with less VRAM might not be sufficient to run the project due to the high memory requirements of the components involved.
+
+
+
 ## Installation Steps
 
 1. **Clone the repository:**
@@ -57,6 +66,21 @@ To index the data in Milvus, follow these steps after running Docker Compose:
      ```bash
      docker exec -it rag_server python3 index_dataset.py --help
      ```
+
+## Launching the Demo
+A demonstration of the project is available using Gradio, located in the `demo/` directory. Follow these steps to launch the demo:
+
+1. Ensure all required services are up and running.
+2. Navigate to the `demo/` directory.
+3. Execute the following command:
+
+```bash
+python demo/gradio_ui.py --rag_api_host "http://127.0.0.1:3000" --port 7860
+```
+
+This command will start the Gradio demo interface on port 7860, connecting to the RAG API hosted locally at `http://127.0.0.1:3000`.
+
+
 
 ---
 

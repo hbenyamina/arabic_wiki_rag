@@ -38,4 +38,6 @@ def generate_text_streaming(system_prompt, user_prompt):
         temperature=config.temperature,
     )
     for chunk in completion:
-        yield chunk.choices[0].delta.content
+        chunk_text = chunk.choices[0].delta.content
+        if chunk_text:
+            yield chunk_text

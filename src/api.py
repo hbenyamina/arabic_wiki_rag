@@ -2,17 +2,12 @@ from pydantic import BaseModel, Field
 from typing import List
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
-from utils.data_models import History
+from utils.data_models import History, SearchModel
 from rag import generate_response, generate_response_streaming
 import uvicorn
 
 
 app = FastAPI()
-
-
-class SearchModel(BaseModel):
-    query: str
-    history: List[History] = Field(None)
 
 
 @app.get("/ask")
@@ -28,7 +23,8 @@ def format_streaming_event(data):
 async def stream_endpoint(request: SearchModel):
     def generate():
         for message in generate_response_streaming(request.query, request.history):
-            yield format_streaming_event(message)
+            if message:
+                yield format_streaming_event(message)
 
     return StreamingResponse(
         generate(),
